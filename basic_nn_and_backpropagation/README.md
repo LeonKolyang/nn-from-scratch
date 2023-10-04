@@ -37,7 +37,7 @@ Neurons also consider bias, but we will ignore that for now and set it to 0 in t
 The following function thereby defines our simple neural network:  
 `output = input_value * weight + bias`  
 We can already give it an input, which will return an output.
-> Implementation: [neural_net.py](neural_net.py#L17)
+> Implementation: [01_neural_net.py](01_neural_net.py#L17)
 ## Learning Process
 Let's start with a different input and output combination:  
 `input_value: 2.5 -> output_value: 1.675`  
@@ -65,7 +65,7 @@ So let's give this task to our neural network and let it find the correct weight
 Given these components, our neural network can perform a similar process to our handwritten calculation. Let's go over them step by step and find out how they help us to find the right weight.
 
 ### Error
-> Implementation: [cost_function](neural_net.py#L2)  
+> Implementation: [cost_function](01_neural_net.py#L2)  
 
 We'll stick with our example from earlier and start again with `weight = 0.5`. Running through our network again results in the following output:  
 `2.5 * 0.5 = 1.25`  
@@ -80,7 +80,7 @@ error = (generated_output - expected_output)²
 The error is a value that we want to minimize. The smaller the error, the better our network is performing. 
 
 ### Gradient & Backpropagation
-> Implementation: [gradient_calculation](neural_net.py#L3)
+> Implementation: [gradient_calculation](01_neural_net.py#L3)
 
 To minimize the error, we need to know in _which direction to adjust our weight_, again replacing our intuition from the earlier example with a mathematical approach. Our first guess with `weight = 0.5` resulted in `2.5 * 0.5   = 1.25`, with the output of `1.25` being smaller than the expected output of `1.675`. We concluded that we need to increase the weight based on intuition. Let's find out how we can enable our network to reach the same conclusion.
 
@@ -140,7 +140,7 @@ d(weight)
           = -2.125
 ```
 ### Update Function
-> Implementation: [update_weight](neural_net.py#L6)
+> Implementation: [update_weight](01_neural_net.py#L6)
 
 In our early example, we increased and decreased the weight by hand until we reached the desired output. Our network can do better with the help of the gradient and the **learning rate**. Thanks to the gradient, the network already knows which direction to adjust the weight. The learning rate defines how big the adjustment should be. The learning rate is a value between 0 and 1. 
 
@@ -207,23 +207,23 @@ gradient         = 2 * (2.5 * 0.67 - 1.675) * 2.5      # -> 0.0
 adjusted_weight  = 0.67 - (0.0 * 0.1)                  # -> 0.67
 ```
 ## Implementation
-The [neural_net.py](neural_net.py) script implements the learning process in a simple for-loop.  
-We define all the functions to [calculate the network's output](neural_net.py#L17), [calculate the error with the cost function](neural_net.py#L2), [calculate the gradient](neural_net.py#L3-L5), and [update the weight](neural_net.py#L6).
+The [01_neural_net.py](01_neural_net.py) script implements the learning process in a simple for-loop.  
+We define all the functions to [calculate the network's output](01_neural_net.py#L17), [calculate the error with the cost function](01_neural_net.py#L2), [calculate the gradient](01_neural_net.py#L3-L5), and [update the weight](01_neural_net.py#L6).
 
-We build the process defined in this chapter by executing these functions step by step in the for-loop. To use that learning loop, we wrap it into a [train function](neural_net.py#L9-L34) and take the parameters for the learning process (_input_value_, _expected_output_) and the network (_weight_, _learning_rate_, _iterations_) as arguments.
-Additionally, we store the [_outputs_, _errors_, and _weights_](neural_net.py#L11-L13) in lists to track the learning process and visualize it later on.
+We build the process defined in this chapter by executing these functions step by step in the for-loop. To use that learning loop, we wrap it into a [train function](01_neural_net.py#L9-L34) and take the parameters for the learning process (_input_value_, _expected_output_) and the network (_weight_, _learning_rate_, _iterations_) as arguments.
+Additionally, we store the [_outputs_, _errors_, and _weights_](01_neural_net.py#L11-L13) in lists to track the learning process and visualize it later on.
 
-We can now call our training function with the [parameters we used in the example above](neural_net.py#L43-L52) and [execute a learning run](neural_net.py#L54).
+We can now call our training function with the [parameters we used in the example above](01_neural_net.py#L43-L52) and [execute a learning run](01_neural_net.py#L54).
 
-After a successful learning run, we can use the weight and bias to [run a test prediction](neural_net.py#L57).
+After a successful learning run, we can use the weight and bias to [run a test prediction](01_neural_net.py#L57).
 
 ### Early Stopping
-The script [neural_net_early_stopping.py](neural_net_early_stopping.py) implements the same learning process as [neural_net.py](neural_net.py), but it stops the learning process early if the error does not improve over a certain number of iterations. 
+The script [02_neural_net_early_stopping.py](02_neural_net_early_stopping.py) implements the same learning process as [01_neural_net.py](01_neural_net.py), but it stops the learning process early if the error does not improve over a certain number of iterations. 
 
-We use the function [check_cost_improvement](neural_net_early_stopping.py#L14-L19) to look at the last few errors and check if the error is still improving. If not, we stop the learning process.
+We use the function [check_cost_improvement](02_neural_net_early_stopping.py#L14-L19) to look at the last few errors and check if the error is still improving. If not, we stop the learning process.
 
 ### Implementation as a Class
-To make our network usable, we can wrap it into a class. The script [neural_net_early_stopping_class.py](neural_net_early_stopping_class.py) implements the same logic as above but wraps it in a class. We could now easily use it within a project or do things like storing it as an artifact and load it into different projects or environments.
+To make our network usable, we can wrap it into a class. The script [02_neural_net_early_stopping_class.py](02_neural_net_early_stopping_class.py) implements the same logic as above but wraps it in a class. We could now easily use it within a project or do things like storing it as an artifact and load it into different projects or environments.
 
 ## Sources
 - [Basic Backpropagation](https://www.youtube.com/watch?v=8d6jf7s6_Qs&t=0s)
